@@ -1,10 +1,9 @@
 from manim import *
 
 class Costa(Scene):
+    def construct(self):
+        self.show_additional_elements()
     def show_additional_elements(self):
-        """
-        Mostra elementi aggiuntivi come immagini SVG e formule matematiche.
-        """
         # Gestione delle immagini SVG
         coast = SVGMobject("britain_coast.svg")
         coast.set_fill(color=BLUE, opacity=0.5)  # Riempi di blu chiaro con opacità

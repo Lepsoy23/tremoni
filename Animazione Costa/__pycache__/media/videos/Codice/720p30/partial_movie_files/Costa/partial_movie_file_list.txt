@@ -1,0 +1,9 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/2016333726_2162481034_223132457.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/543634251_2908912454_4055744903.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/543634251_3890345977_2084171088.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/543634251_1860263084_3954103144.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/543634251_1766432466_777595037.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/543634251_713238629_4131132508.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/543634251_2475379470_3353485085.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/media/videos/Codice/720p30/partial_movie_files/Costa/543634251_3715250371_4166924454.mp4'
