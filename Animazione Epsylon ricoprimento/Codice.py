@@ -6,19 +6,56 @@ config.tex_template.add_to_preamble(r"\definecolor{miogiallo}{RGB}{255,255,0}")
 
 class EpsilonRicoprimentoOttimizzato(Scene):
     def construct(self):
-        # Testo con colori incorporati direttamente in LaTeX
-        testo = MathTex(
-            r"\text{Sia } (X, d) \text{ spazio metrico, } A \subseteq X \text{ fissato } \textcolor{yellow}{\varepsilon} \in \mathbb{R} \text{ si definisce un } \textcolor{yellow}{\varepsilon}\text{-ricoprimento di } A: \\",
-            r"\mathcal{U}_{\textcolor{yellow}{\varepsilon}}(A) :=  \{\textcolor{green}{U_i}\}_{i \in I} \subseteq X \text{ tale che } \bigcup_{i \in I} \textcolor{green}{U_i} = A  \ \land \sup_{x,y \in \textcolor{green}{U_i}} d(x,y) := \text{ diam}(\textcolor{green}{U_i}) < \textcolor{yellow}{\varepsilon} "
-        ).arrange(DOWN, aligned_edge=LEFT).scale(0.7)
-
-        # Mostra il testo nella scena
-        self.play(Write(testo))
+        # Prima riga - manteniamo le parti più unite per l'allineamento
+        riga1 = MathTex(
+            r"\text{Sia } (X, d) \text{ spazio metrico, } A \subseteq X \text{ fissato } ",
+            r"\varepsilon",
+            r"\in \mathbb{R} \text{ si definisce un }",
+            r"\varepsilon",
+            r"\text{-ricoprimento di } A:"
+        )
+        
+        # Coloriamo le epsilon nella prima riga
+        riga1[1].set_color(YELLOW)
+        riga1[3].set_color(YELLOW)
+        
+        # Seconda riga - manteniamo U_ε come una singola unità
+        riga2 = MathTex(
+            r"\mathcal{U}_{\varepsilon}(A) := \{",
+            r"U_i",
+            r"\}_{i \in I} \subseteq X \text{ tale che } \bigcup_{i \in I} ",
+            r"U_i",
+            r"= A \ \land \sup_{x,y \in ",
+            r"U_i",
+            r"} d(x,y) := \text{diam}(",
+            r"U_i",
+            r") < ",
+            r"\varepsilon"
+        )
+        
+        # Coloriamo le U_i e l'epsilon nella seconda riga
+        riga2[1].set_color(GREEN)
+        riga2[3].set_color(GREEN)
+        riga2[5].set_color(GREEN)
+        riga2[7].set_color(GREEN)
+        riga2[9].set_color(YELLOW)
+        
+        # Coloriamo l'epsilon nel pedice di U
+        riga2[0][1].set_color(YELLOW)  # Questo indice potrebbe dover essere aggiustato
+        
+        # Arrangiamo le righe verticalmente
+        testo_completo = VGroup(riga1, riga2).arrange(DOWN, aligned_edge=LEFT).scale(0.7)
+        
+        # Animiamo l'apparizione del testo
+        self.play(
+            Write(testo_completo),
+            run_time=2
+        )
         self.wait()
 
 
         # Spostare il testo verso l'alto
-        self.play(testo.animate.shift(UP * 2))
+        self.play(testo_completo.animate.shift(UP * 2))
         self.wait(0.5)  
         # Parametri per la curva e il ricoprimento
         curve_color = BLUE
