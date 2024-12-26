@@ -1,0 +1,9 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/2016333726_225781189_223132457.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/543634251_2194648457_3388407589.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/543634251_3890345977_3766127824.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/543634251_2836823195_3348398452.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/543634251_933465942_700507591.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/543634251_2236362347_2343027621.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/543634251_1141282389_2456624565.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione Proposizione 3  dimensione di Hausdorf/media/videos/Codice/720p30/partial_movie_files/PropositionWithGraph/543634251_3619247903_4230842019.mp4'

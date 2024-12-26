@@ -1,17 +1,21 @@
 from manim import *
 import random
+config.tex_template.add_to_preamble(r"\usepackage{xcolor}")
+config.tex_template.add_to_preamble(r"\definecolor{mioverde}{RGB}{0,128,0}")
+config.tex_template.add_to_preamble(r"\definecolor{miogiallo}{RGB}{255,255,0}")
 
 class EpsilonRicoprimentoOttimizzato(Scene):
     def construct(self):
-              # Testo iniziale, copiato dall'immagine
+        # Testo con colori incorporati direttamente in LaTeX
         testo = MathTex(
-            r"\text{Sia } (X, d) \text{ spazio metrico, } A \subseteq X \text{ fissato } \varepsilon \in \mathbb{R} \text{ si definisce un } \varepsilon\text{-ricoprimento di } A: \\",
-            r"\mathcal{U}_\varepsilon(A) :=  \{U_i\}_{i \in I} \subseteq X \text{  tale che } \bigcup_{i \in I} U_i = A  \ \land \sup_{x,y \in U_i} d(x,y) := \text{ diam}(U_i)< \varepsilon "
-        ).arrange(DOWN, aligned_edge=LEFT).scale(0.7)   # Ridimensionato leggermente per adattarlo allo schermo
-        
-        # Posizionare il testo inizialmente al centro 
+            r"\text{Sia } (X, d) \text{ spazio metrico, } A \subseteq X \text{ fissato } \textcolor{yellow}{\varepsilon} \in \mathbb{R} \text{ si definisce un } \textcolor{yellow}{\varepsilon}\text{-ricoprimento di } A: \\",
+            r"\mathcal{U}_{\textcolor{yellow}{\varepsilon}}(A) :=  \{\textcolor{green}{U_i}\}_{i \in I} \subseteq X \text{ tale che } \bigcup_{i \in I} \textcolor{green}{U_i} = A  \ \land \sup_{x,y \in \textcolor{green}{U_i}} d(x,y) := \text{ diam}(\textcolor{green}{U_i}) < \textcolor{yellow}{\varepsilon} "
+        ).arrange(DOWN, aligned_edge=LEFT).scale(0.7)
+
+        # Mostra il testo nella scena
         self.play(Write(testo))
-        self.wait(3)
+        self.wait()
+
 
         # Spostare il testo verso l'alto
         self.play(testo.animate.shift(UP * 2))
