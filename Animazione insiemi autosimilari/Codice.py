@@ -1,77 +1,51 @@
+from math import tau
 from manim import *
 
-class SelfSimilarFractalsAsSubset(Scene):
-    CONFIG = {
-        "fractal_width" : 1.5
-    }
+class ContinuousRotatingCube3D(ThreeDScene):
     def construct(self):
-        self.add_self_similar_fractals()
-        self.add_general_fractals()
-
-    def add_self_similar_fractals(self):
-        fractals = VGroup(
-            DiamondFractal(order = 5),
-            KochSnowFlake(order = 3),
-            Sierpinski(order = 5),
-        )
-        for submob in fractals:
-            submob.set_width(self.fractal_width)
-        fractals.arrange(RIGHT)
-        fractals[-1].next_to(VGroup(*fractals[:-1]), DOWN)
-
-        title = OldTexText("Self-similar fractals")
-        title.next_to(fractals, UP)
-
-        small_rect = Rectangle()
-        small_rect.replace(VGroup(fractals, title), stretch = True)
-        small_rect.scale(1.2)
-        self.small_rect = small_rect
-
-        group = VGroup(fractals, title, small_rect)
-        group.to_corner(UP+LEFT, buff = MED_LARGE_BUFF)
-
+        # Set up the camera for 3D scene
+        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)
+        
+        # Create title
+        title = Text("Cube", font_size=36)
+        title.move_to([1, 2.9, 0])
+        
+        # Create the single large cube
+        large_cube = Cube(side_length=1.0)
+        large_cube.set_fill(BLUE, opacity=0.5)
+        large_cube.set_stroke(WHITE, width=1)
+        large_cube.move_to([-1, 0.5, 1.5])  # Position below title
+        
+        # Create eight smaller cubes in a compact 2x2x2 arrangement below the large cube
+        small_cubes = VGroup()
+        cube_spacing = 0.6  # Reduced spacing between cubes for more compact arrangement
+        positions = [
+            # Front layer
+            [-cube_spacing/2-2 +1.3 , + 0.5, cube_spacing/2 -0.25],    # front left
+            [cube_spacing/2-2 +1.3,+0.5, cube_spacing/2 -0.25],     # front right
+            [-cube_spacing/2-2 +1.3, +0.5, -cube_spacing/2 -0.25 ],   # back left
+            [cube_spacing/2-2 +1.3, +0.5, -cube_spacing/2 -0.25],    # back right
+            # Back layer
+            [-cube_spacing/2-2 +1.3, 1, cube_spacing/2 -0.25],   # front left
+            [cube_spacing/2-2 +1.3 , +1, cube_spacing/2 -0.25],    # front right
+            [-cube_spacing/2-2 +1.3, +1, -cube_spacing/2 -0.25],  # back left
+            [cube_spacing/2-2 +1.3, +1, -cube_spacing/2 -0.25],   # back right
+        ]
+        
+        for pos in positions:
+            small_cube = Cube(side_length=0.4)
+            small_cube.set_fill(BLUE, opacity=0.5)
+            small_cube.set_stroke(WHITE, width=1)
+            small_cube.move_to(pos)
+            small_cubes.add(small_cube)
+        
+        # Add all objects to scene
+        self.add_fixed_in_frame_mobjects(title)
+        self.add(large_cube)
+        self.add(small_cubes)
+        
+        # Create continuous rotation animation
         self.play(
-            Write(title),
-            ShowCreation(fractals),
-            run_time = 3
+            Rotating(large_cube, axis=[0, 0, 1], angle=tau, run_time=4, rate_func=linear),
+            Rotating(small_cubes, axis=[0, 0, 1], angle=tau, run_time=4, rate_func=linear)
         )
-        self.play(ShowCreation(small_rect))
-        self.wait()
-
-    def add_general_fractals(self):
-        big_rectangle = Rectangle(
-            width = FRAME_WIDTH - MED_LARGE_BUFF,
-            height = FRAME_HEIGHT - MED_LARGE_BUFF,
-        )
-        title = OldTexText("Fractals")
-        title.scale(1.5)
-        title.next_to(ORIGIN, RIGHT, buff = LARGE_BUFF)
-        title.to_edge(UP, buff = MED_LARGE_BUFF)
-
-        britain = Britain(
-            fill_opacity = 0,
-            stroke_width = 2,
-            stroke_color = WHITE,
-        )
-        britain.next_to(self.small_rect, RIGHT)
-        britain.shift(2*DOWN)
-
-        randy = Randolph().flip().scale(1.4)
-        randy.next_to(britain, buff = SMALL_BUFF)
-        randy.generate_target()
-        randy.target.change_mode("pleading")
-        fractalify(randy.target, order = 2)
-
-        self.play(
-            ShowCreation(big_rectangle),
-            Write(title),
-        )
-        self.play(ShowCreation(britain), run_time = 5)
-        self.play(
-            britain.set_fill, BLUE, 1,
-            britain.set_stroke, None, 0,
-            run_time = 2
-        )
-        self.play(FadeIn(randy))
-        self.play(MoveToTarget(randy, run_time = 2))
-        self.wait(2)
