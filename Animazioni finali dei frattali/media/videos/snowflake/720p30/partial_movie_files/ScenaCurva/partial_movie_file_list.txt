@@ -1,0 +1,7 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/User/Documents/GitHub/tremoni/Animazioni finali dei frattali/media/videos/snowflake/720p30/partial_movie_files/ScenaCurva/2016333726_1784311964_2685123717.mp4'
+file 'file:C:/Users/User/Documents/GitHub/tremoni/Animazioni finali dei frattali/media/videos/snowflake/720p30/partial_movie_files/ScenaCurva/543634251_1959358871_1103829913.mp4'
+file 'file:C:/Users/User/Documents/GitHub/tremoni/Animazioni finali dei frattali/media/videos/snowflake/720p30/partial_movie_files/ScenaCurva/543634251_2689388330_3885218652.mp4'
+file 'file:C:/Users/User/Documents/GitHub/tremoni/Animazioni finali dei frattali/media/videos/snowflake/720p30/partial_movie_files/ScenaCurva/543634251_1959358871_729618623.mp4'
+file 'file:C:/Users/User/Documents/GitHub/tremoni/Animazioni finali dei frattali/media/videos/snowflake/720p30/partial_movie_files/ScenaCurva/543634251_1848445297_3935260024.mp4'
+file 'file:C:/Users/User/Documents/GitHub/tremoni/Animazioni finali dei frattali/media/videos/snowflake/720p30/partial_movie_files/ScenaCurva/543634251_1959358871_3997513497.mp4'

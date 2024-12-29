@@ -1,63 +1,67 @@
 from manim import *
 import numpy as np
 
-# class KochCurve(manim.Mobject):
-#     def __init__(
-#             self, 
-#             color = manim.color.WHITE,
-#             meet: tuple[float]=(-2,0,0),
-#             join: tuple[float]=(2,0,0),
-#             *args,
-#             **kwargs
-#         ):
-#         super().__init__(*args, **kwargs)
-
-#         self.meet = meet
-#         self.join = join
-
-        
-
-# k = KochCurve()
-
-class Curva(Scene):
+class Curva(Mobject):
     def __init__(
             self,
-            lung = 3, # Lunghezza del segmento
             inizio = ORIGIN, # Inizio del segmento
-            direz = RIGHT # Direzione del segmento
-            ):
-        super().__init__()
+            fine = RIGHT, # Fine del segmento
+            *args,
+            **kwargs
+        ):
+        super().__init__(*args, **kwargs)
 
-        self.lung = lung
         self.inizio = inizio
-        self.direz = direz
-        self.fine = lung * direz
+        self.fine = fine
+        self.diff = self.fine - self.inizio
+        self.terz1 = 1/3 * self.diff + self.inizio
+        self.terz2 = 2/3 * self.diff + self.inizio
 
+        # self.linea = Line(self.inizio, self.fine)
+        self.l_1 = Line(self.inizio, self.terz1)
+        self.l_2 = Line(self.terz1, self.terz2).rotate(PI / 3, about_point= self.terz1)
+        self.l_3 = Line(self.terz2, self.terz1).rotate( - PI / 3, about_point= self.terz2)
+        self.l_4 = Line(self.terz2, self.fine)
+
+class ScenaCurva(Scene):
     def construct(self):
-        k = Curva()
-        linea = Line(k.inizio, k.fine)
-        l_1 = Line(k.inizio, k.fine).scale(1/3).next_to(linea, -k.fine * 1/3).set_color(RED)
-        l_2 = Line(k.inizio, k.fine).scale(1/3).next_to(k.fine, 1/3 * RIGHT).set_color(ORANGE)
+        num = 7
+        ini = num * LEFT + DOWN
+        fin = num * RIGHT + DOWN
+        k = Curva(ini, fin)
+        l = Line(ini, fin)#.set_color(ORANGE)
 
-        self.add(linea,l_1,l_2)
+        self.add(l)
+
+        iteraz = 3
+        lista = [l,]
+
+        for i in range(iteraz):
+            for j in range(0, len(lista), 3 * (i+1)):
+                k = Curva(lista[j].get_start(),lista[j].get_end())
+                ll = Line(k.inizio,k.terz1).add(k.l_1,k.l_2,k.l_3,k.l_4)
+                self.play(Transform(lista[j], ll))
+                lista.insert(j, k.l_4)
+                lista.insert(j, k.l_3)
+                lista.insert(j, k.l_2)
+                lista.insert(j, k.l_1)
+                lista.pop(j)
+            self.wait(0.5)
+
+        # self.add(k.l_1,k.l_2,k.l_3,k.l_4)
+
+        # k2 = Curva(k.l_1.get_start(),k.l_1.get_end())
+        # self.add(k2.l_1,k2.l_2,k2.l_3,k2.l_4)
 
 
-        # b_1 = Dot(inizio).set_color(RED)
-        # b_2 = Dot(fine * (1/3)).set_color(BLUE)
-        # b_3 = Dot(inizio + (1/2) * lung* RIGHT + (1/6 * np.sqrt(3)) * lung * UP).set_color(GREEN)
-        # b_4 = Dot(fine * (2/3)).set_color(ORANGE)
 
-        # self.add(linea, b_1, b_2, b_3, b_4)
+        # linee1 = Line(ORIGIN,ORIGIN).add(k.l_1,k.l_2,k.l_3,k.l_4)
+
+        # k2 = Curva(k.l_1.get_start(),k.l_1.get_end())
+
+        # linee2 =  Line(ORIGIN,ORIGIN).add(k2.l_1,k2.l_2,k2.l_3,k2.l_4)
+
+        # self.add(linee1, linee2)
 
 
-        # b_1: tuple[float] = [0,0,0]
-        # b_2: tuple[float] = [1/3,0,0]
-        # b_3: tuple[float] = [1/2,1/6 * np.sqrt(3),0]
-        # b_4: tuple[float] = [2/3,0,0]
-        # b_5: tuple[float] = [1,0,0]
-        # uno = Line(b_1,b_2).scale(lung)
-        # due = Line(b_2,b_3).scale(lung)
-        # tre = Line(b_3,b_4).scale(lung)
-        # quattro = Line(b_4,b_5).scale(lung)
-        
-        # self.add(uno, due, tre, quattro)
+
