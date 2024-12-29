@@ -1,51 +1,26 @@
-from math import tau
 from manim import *
 
-class ContinuousRotatingCube3D(ThreeDScene):
+class Similitudini(Scene):
     def construct(self):
-        # Set up the camera for 3D scene
-        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)
+        formula0 = MathTex(r"\text{Similitudine con fattore di risclamento } r ")
+        # Prima formula
+        formula1 = MathTex(r"S_i: \mathbb{R}^n \rightarrow \mathbb{R}^n \\ x \mapsto r_i O(x) + b_i \\ \text{con } O \text{ trasformazione ortogonale e } b_i \in \mathbb{R}^n")
         
-        # Create title
-        title = Text("Cube", font_size=36)
-        title.move_to([1, 2.9, 0])
+        # Seconda formula
+        formula2 = MathTex(r"S = (S_1, ..., S_m) \text{ famiglia finita di similitudini con fattore di riscalamento } r_i \\ \text{dato } E \in \mathbb{R}^n, S(E) = \bigcup_{i=1}^m S_i(E)")
         
-        # Create the single large cube
-        large_cube = Cube(side_length=1.0)
-        large_cube.set_fill(BLUE, opacity=0.5)
-        large_cube.set_stroke(WHITE, width=1)
-        large_cube.move_to([-1, 0.5, 1.5])  # Position below title
-        
-        # Create eight smaller cubes in a compact 2x2x2 arrangement below the large cube
-        small_cubes = VGroup()
-        cube_spacing = 0.6  # Reduced spacing between cubes for more compact arrangement
-        positions = [
-            # Front layer
-            [-cube_spacing/2-2 +1.3 , + 0.5, cube_spacing/2 -0.25],    # front left
-            [cube_spacing/2-2 +1.3,+0.5, cube_spacing/2 -0.25],     # front right
-            [-cube_spacing/2-2 +1.3, +0.5, -cube_spacing/2 -0.25 ],   # back left
-            [cube_spacing/2-2 +1.3, +0.5, -cube_spacing/2 -0.25],    # back right
-            # Back layer
-            [-cube_spacing/2-2 +1.3, 1, cube_spacing/2 -0.25],   # front left
-            [cube_spacing/2-2 +1.3 , +1, cube_spacing/2 -0.25],    # front right
-            [-cube_spacing/2-2 +1.3, +1, -cube_spacing/2 -0.25],  # back left
-            [cube_spacing/2-2 +1.3, +1, -cube_spacing/2 -0.25],   # back right
-        ]
-        
-        for pos in positions:
-            small_cube = Cube(side_length=0.4)
-            small_cube.set_fill(BLUE, opacity=0.5)
-            small_cube.set_stroke(WHITE, width=1)
-            small_cube.move_to(pos)
-            small_cubes.add(small_cube)
-        
-        # Add all objects to scene
-        self.add_fixed_in_frame_mobjects(title)
-        self.add(large_cube)
-        self.add(small_cubes)
-        
-        # Create continuous rotation animation
-        self.play(
-            Rotating(large_cube, axis=[0, 0, 1], angle=tau, run_time=4, rate_func=linear),
-            Rotating(small_cubes, axis=[0, 0, 1], angle=tau, run_time=4, rate_func=linear)
-        )
+        # Posizionamento e dimensione delle formule
+        formula0.scale(0.7)
+        formula1.scale(0.7)  # Riduci la dimensione del 10%
+        formula2.scale(0.7)
+        VGroup(formula0, formula1, formula2).arrange(DOWN, buff=1)
+
+        # Animazione con pausa
+        self.play(Write(formula0))
+        self.play(Write(formula1))
+        self.wait(2)  # Pausa di 2 secondi
+        self.play(Write(formula2))
+
+if __name__ == "__main__":
+    scene = Similitudini()
+    scene.render()

@@ -1,0 +1,5 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione insiemi autosimilari/media/videos/Codice/720p30/partial_movie_files/Similitudini/2016333726_3926893665_223132457.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione insiemi autosimilari/media/videos/Codice/720p30/partial_movie_files/Similitudini/543634251_2892814301_4265601472.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione insiemi autosimilari/media/videos/Codice/720p30/partial_movie_files/Similitudini/543634251_1141282389_388074356.mp4'
+file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione insiemi autosimilari/media/videos/Codice/720p30/partial_movie_files/Similitudini/543634251_443588588_3245701453.mp4'

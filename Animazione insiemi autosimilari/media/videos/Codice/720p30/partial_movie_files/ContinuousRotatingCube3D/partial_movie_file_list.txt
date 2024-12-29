@@ -1,2 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/alessiovalsania/Desktop/tremoni/Animazione insiemi autosimilari/media/videos/Codice/720p30/partial_movie_files/ContinuousRotatingCube3D/4074646901_3449382734_3001822090.mp4'
