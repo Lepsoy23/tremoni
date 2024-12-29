@@ -53,10 +53,10 @@ class EpsilonRicoprimentoOttimizzato(Scene):
         )
         self.wait()
 
-
         # Spostare il testo verso l'alto
         self.play(testo_completo.animate.shift(UP * 2))
         self.wait(0.5)  
+
         # Parametri per la curva e il ricoprimento
         curve_color = BLUE
         ricoprimento_color = YELLOW
@@ -75,7 +75,7 @@ class EpsilonRicoprimentoOttimizzato(Scene):
 
         # Intervallo della curva da coprire (da punto A a punto B)
         t_range_cover = [-0.95, 0.95]
-        num_covering_sets = 14  # Numero di cerchi aumentato per coprire meglio la curva
+        num_covering_sets = 15  # Numero di cerchi aumentato per coprire meglio la curva
 
         # Posizionamento degli insiemi di ricoprimento solo tra punto A e B
         x_positions = np.linspace(t_range_cover[0], t_range_cover[1], num_covering_sets)  # Distribuzione lungo la curva
@@ -102,8 +102,8 @@ class EpsilonRicoprimentoOttimizzato(Scene):
             angles = np.linspace(0, 2 * np.pi, num_points, endpoint=False)
             points = [
                 center + np.array([
-                    max_size * random.uniform(0.8, 2.3) * np.cos(a),  # Maggiore deformazione
-                    max_size * random.uniform(0.8, 2.3) * np.sin(a),
+                    max_size * random.uniform(0.4, 2.3) * np.cos(a),  # Maggiore deformazione
+                    max_size * random.uniform(0.4, 2.3) * np.sin(a),
                     0
                 ])
                 for a in angles
@@ -150,5 +150,43 @@ class EpsilonRicoprimentoOttimizzato(Scene):
         # Mostrare le figure randomiche
         self.play(LaggedStart(*[FadeIn(figura) for figura in figure_randomiche], lag_ratio=0.2))
         self.wait(0.4)
+        
+        # Formula della sommatoria
+        formula = MathTex(
+            r"H_{p,\varepsilon}(A) = \inf_{\mathcal{U_\varepsilon(A)}} \left\{ \sum_{j=1}^\infty"
+            r" (\operatorname{diam} U_j)^p \ \mid \ U_j \in \mathcal{U_\varepsilon(A)}   \right\}",
+            font_size=32
+        ).shift(UP * 0.2)
+        # Colora i caratteri epsilon di giallo
+        formula[0][3].set_color(YELLOW)  # Primo epsilon
+        formula[0][12].set_color(YELLOW)  # Secondo epsilon
+        formula[0][38].set_color(YELLOW)  # Terzo epsilon
+
+        # Colora i caratteri U_j di verde
+        formula[0][34].set_color(GREEN)  
+        formula[0][29].set_color(GREEN)  
+        formula[0][35].set_color(GREEN)  
+        formula[0][30].set_color(GREEN)  
+
+        # Mostrare la formula
+        self.play(Write(formula))
+        self.wait(1)
+        
+        # **Animazione delle figure verdi che cambiano dinamicamente con Transform**
+        n_secondi = 3  # Durata dell'animazione in secondi
+        num_steps = n_secondi * 2  # Numero di iterazioni
+
+        for _ in range(num_steps):
+            # Creiamo nuove figure
+            nuove_figure = VGroup(*[crea_figura_randomica(cerchio) for cerchio in ricoprimenti])
+
+            # Trasformazione fluida delle figure
+            self.play(
+                Transform(figure_randomiche, nuove_figure),
+                run_time=0.5
+            )
+            self.wait(0.5)  # Attende mezzo secondo per il cambio figura
+        
+        self.wait(2)
         self.clear() 
         self.wait(1)
