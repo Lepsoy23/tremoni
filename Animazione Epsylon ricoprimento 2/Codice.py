@@ -3,6 +3,26 @@ import random
 
 class EpsilonRicoprimentoGenerale(Scene):
     def construct(self):
+        titolo = Text("Misura di Hausdorff p-dimensionale", font_size=48).to_edge(UP)
+        self.play(Write(titolo))
+        self.wait(1)
+        
+        limite = MathTex(
+            r"H^p(A) = \lim_{\varepsilon \to 0} H^p_\varepsilon(A)", 
+            font_size=44
+        )
+        
+        # Rendere gialla la epsilon
+        limite[0][14].set_color(YELLOW)  # Il carattere \varepsilon si trova all'indice 14
+        limite[0][9].set_color(YELLOW)  # Il carattere \varepsilon si trova all'indice 9 
+
+        # Mostrare la formula inizialmente
+        self.play(Write(limite))
+        self.wait(2)
+
+        # Animare lo spostamento della formula verso l'alto
+        self.play(limite.animate.shift(UP * 1.7), run_time=1.5)
+        self.wait(1)
         # Parametri generali
         curve_color = BLUE
         ricoprimento_color = YELLOW
@@ -12,9 +32,9 @@ class EpsilonRicoprimentoGenerale(Scene):
         curva_shift = DOWN * 1.5
 
         # Parametri personalizzabili
-        num_radii = 7  # Numero di raggi
+        num_radii = 5  # Numero di raggi
         min_radius = 0.05  # Raggio minimo
-        max_radius = 0.8  # Raggio massimo
+        max_radius = 1  # Raggio massimo
         num_points_range = (4, 14)  # Numero di punti delle figure, variabile
 
         # Definizione della curva generica
@@ -40,7 +60,7 @@ class EpsilonRicoprimentoGenerale(Scene):
             elif raggio < 0.6:
                 return int(7 + (1 / raggio) * 5)  # Numero medio di cerchi
             else:
-                return int(5 + (1 / raggio) * 4)  # Meno cerchi per raggi grandi
+                return int(5 + (1 / raggio) * 5)  # Meno cerchi per raggi grandi
 
         # Calcolare il numero di cerchi per ogni raggio
         num_sets = [calc_num_circles(raggio) for raggio in radii]
@@ -104,10 +124,15 @@ class EpsilonRicoprimentoGenerale(Scene):
         # Mostrare i punti A e B con le parentesi
         self.play(FadeIn(parentesi_A), FadeIn(parentesi_B))
         self.wait(0.5)
-
+        epsilon_text = MathTex(r"\varepsilon = {:.2f}".format(1), font_size=28, color=YELLOW).move_to(curva.get_left() + LEFT + 1.5* UP)
+        self.play(FadeIn(epsilon_text))
+        self.wait(0.5)
         # Mostrare cerchi e figure verdi per ogni intervallo, creando i cerchi prima e le figure dopo
         for i in range(len(radii)-1, -1, -1):  # Invertiamo l'ordine di creazione dei raggi
             current_circles = ricoprimenti.submobjects[sum(num_sets[:i]):sum(num_sets[:i+1])]
+           # Aggiornare dinamicamente il testo di epsilon
+            new_epsilon_text = MathTex(r"\varepsilon = {:.2f}".format(radii[i]), font_size=28, color=YELLOW).move_to(curva.get_left() + LEFT + 1.5* UP)
+            self.play(Transform(epsilon_text, new_epsilon_text))
             current_figures = figure_randomiche.submobjects[i]
 
             # FadeOut dei cerchi e delle figure precedenti, se ci sono
@@ -119,7 +144,7 @@ class EpsilonRicoprimentoGenerale(Scene):
             # Creare e fare comparire cerchi
             self.play(
                 Create(VGroup(*current_circles)),
-                run_time=0.8  # Rallentato rispetto a prima
+                run_time=0.7  # Rallentato rispetto a prima
             )
 
             # Creare le figure verdi **solo dopo** aver completato la creazione dei cerchi
