@@ -1,16 +1,13 @@
 from manim import *
 
 class Curva(Mobject):
-    def __init__(
-            self,
-            inizio = ORIGIN, # Inizio del segmento
-            fine = RIGHT, # Fine del segmento
-            *args,
-            **kwargs
-        ):
+    def __init__(self, inizio = ORIGIN, fine = RIGHT, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # Inizio del segmento
         self.inizio = inizio
+
+        # Fine del segmento
         self.fine = fine
 
         # Serve per calcolare gli altri punti. E' la lunghezza della linea
@@ -33,30 +30,55 @@ class Curva(Mobject):
 
 class ScenaCurva(Scene):
     def construct(self):
-        num = 7
-        ini = num * LEFT + DOWN
-        fin = num * RIGHT + DOWN
-        k = Curva(ini, fin)
-        l = Line(ini, fin)#.set_color(ORANGE)
+        num = 3
+        ini = num * LEFT + 2 * UP
+        fin = num * RIGHT + 2 * UP
+        l = Line(ini + 3 * DOWN, fin + 3 * DOWN)
 
-        self.add(l)
+        l_visiva = Line(ini, fin)
+
+        self.add(l_visiva)
 
         iteraz = 3
-        lista = [l,]
-        offset = 4
+        lista = [[l,]]
 
-        for _ in range(iteraz):
-            lung = len(lista)
-            for j in range(0, lung):
-                self.add(lista[offset * j])
-                k = Curva(lista[offset * j].get_start(), lista[offset * j].get_end())
-                ll = Line(k.inizio,k.terz1).add(k.l_1, k.l_2, k.l_3, k.l_4)
-                self.play(Transform(lista[offset * j], ll))
+        for i in range(iteraz):
+            linee = lista[i]
+            m = []
+            for linea in linee:
+                k = Curva(linea.get_start(),linea.get_end())
+                m.append(k.l_1)
+                m.append(k.l_2)
+                m.append(k.l_3)
+                m.append(k.l_4)
+            lista.append(m)
 
-                lista.insert(offset * j, k.l_4)
-                lista.insert(offset * j, k.l_3)
-                lista.insert(offset * j, k.l_2)
-                lista.insert(offset * j, k.l_1)
-                lista.pop(offset * j)
-            self.wait(0.5)
+        lung = len(lista)
+         
+        for i in range(len(lista[1]) - 1):
+            self.play(Transform(l_visiva.copy(), lista[1][i]))
+
+        self.play(Transform(l_visiva, lista[1][i + 1]))
+
+        frase = MathTex(
+            r"& {{S = (S_1,S_2,S_3,S_4) \ \text{applicato a} \ E = [0,1]}} \\ & S_1(x)=\frac{1}{3}x \\ &S_1(x)=\frac{1}{3}R_{\frac{\pi}{3}}(x) + \left(\frac{1}{3},0\right) \\ &S_1(x)=\frac{1}{3}R_{-\frac{\pi}{3}}(x) + \left(\frac{1}{2},\frac{\sqrt{3}}{6}\right)",
+            font_size = 12
+        )
+
+        self.add(frase.shift(3*UP))
+
+        # offset = 4
+        # for _ in range(iteraz):
+        #     lung = len(lista)
+        #     for j in range(0, lung):
+        #         self.add(lista[offset * j])
+        #         k = Curva(lista[offset * j].get_start(), lista[offset * j].get_end())
+        #         ll = Line(k.inizio,k.terz1).add(k.l_1, k.l_2, k.l_3, k.l_4)
+        #         self.play(Transform(lista[offset * j], ll))        
+        #         lista.insert(offset * j, k.l_4)
+        #         lista.insert(offset * j, k.l_3)
+        #         lista.insert(offset * j, k.l_2)
+        #         lista.insert(offset * j, k.l_1)
+        #         lista.pop(offset * j)
+        #     self.wait(0.5)
 
