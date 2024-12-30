@@ -1,5 +1,4 @@
 from manim import *
-import numpy as np
 
 class Curva(Mobject):
     def __init__(
@@ -13,14 +12,23 @@ class Curva(Mobject):
 
         self.inizio = inizio
         self.fine = fine
-        self.diff = self.fine - self.inizio
-        self.terz1 = 1/3 * self.diff + self.inizio
-        self.terz2 = 2/3 * self.diff + self.inizio
 
-        # self.linea = Line(self.inizio, self.fine)
+        # Serve per calcolare gli altri punti. E' la lunghezza della linea
+        self.diff = self.fine - self.inizio 
+
+        # Punto che sta a un terzo del segmento, partendo da inizio verso fine
+        self.terz1 = 1/3 * self.diff + self.inizio 
+
+        # Punto che sta a due terzo del segmento, partendo da inizio verso fine
+        self.terz2 = 2/3 * self.diff + self.inizio 
+
+        # Linea iniziale
+        self.linea = Line(self.inizio, self.fine)
+
+        # Linee dell'iterazione fatta su self.linea
         self.l_1 = Line(self.inizio, self.terz1)
         self.l_2 = Line(self.terz1, self.terz2).rotate(PI / 3, about_point= self.terz1)
-        self.l_3 = Line(self.terz2, self.terz1).rotate( - PI / 3, about_point= self.terz2)
+        self.l_3 = Line(self.terz1, self.terz2).rotate( - PI / 3, about_point= self.terz2)
         self.l_4 = Line(self.terz2, self.fine)
 
 class ScenaCurva(Scene):
@@ -35,33 +43,20 @@ class ScenaCurva(Scene):
 
         iteraz = 3
         lista = [l,]
+        offset = 4
 
-        for i in range(iteraz):
-            for j in range(0, len(lista), 3 * (i+1)):
-                k = Curva(lista[j].get_start(),lista[j].get_end())
-                ll = Line(k.inizio,k.terz1).add(k.l_1,k.l_2,k.l_3,k.l_4)
-                self.play(Transform(lista[j], ll))
-                lista.insert(j, k.l_4)
-                lista.insert(j, k.l_3)
-                lista.insert(j, k.l_2)
-                lista.insert(j, k.l_1)
-                lista.pop(j)
+        for _ in range(iteraz):
+            lung = len(lista)
+            for j in range(0, lung):
+                self.add(lista[offset * j])
+                k = Curva(lista[offset * j].get_start(), lista[offset * j].get_end())
+                ll = Line(k.inizio,k.terz1).add(k.l_1, k.l_2, k.l_3, k.l_4)
+                self.play(Transform(lista[offset * j], ll))
+
+                lista.insert(offset * j, k.l_4)
+                lista.insert(offset * j, k.l_3)
+                lista.insert(offset * j, k.l_2)
+                lista.insert(offset * j, k.l_1)
+                lista.pop(offset * j)
             self.wait(0.5)
-
-        # self.add(k.l_1,k.l_2,k.l_3,k.l_4)
-
-        # k2 = Curva(k.l_1.get_start(),k.l_1.get_end())
-        # self.add(k2.l_1,k2.l_2,k2.l_3,k2.l_4)
-
-
-
-        # linee1 = Line(ORIGIN,ORIGIN).add(k.l_1,k.l_2,k.l_3,k.l_4)
-
-        # k2 = Curva(k.l_1.get_start(),k.l_1.get_end())
-
-        # linee2 =  Line(ORIGIN,ORIGIN).add(k2.l_1,k2.l_2,k2.l_3,k2.l_4)
-
-        # self.add(linee1, linee2)
-
-
 
