@@ -33,13 +33,36 @@ class ScenaCurva(Scene):
         num = 3
         ini = num * LEFT + 2 * UP
         fin = num * RIGHT + 2 * UP
-        l = Line(ini + 3 * DOWN, fin + 3 * DOWN)
+        # Questa linea è dove effettivamente partirà il frattale
+        l = Line(ini + 3 * DOWN, fin + 3 * DOWN).scale(3/4).shift(4 * RIGHT)
 
-        l_visiva = Line(ini, fin)
+        # Serve per fare le varie animazioni
+        l_visiva = Line(ini, fin).scale(3/4).shift(4 * RIGHT + DOWN)
 
-        self.add(l_visiva)
+        similitudine = MathTex(
+            r"& \textbf{\underline{S}} = (S_1,S_2,S_3,S_4) \ \text{applicato a} \ E = [0,1] \\",
+            r"& S_1(x)=\textstyle\frac{1}{3}x \\",
+            r"& S_2(x)=\textstyle\frac{1}{3}R_{\frac{\pi}{3}}(x) + \left(\textstyle\frac{1}{3},0\right) \\",
+            r"& S_3(x)=\textstyle\frac{1}{3}R_{-\frac{\pi}{3}}(x) + \left(\textstyle\frac{1}{2},\textstyle\frac{\sqrt{3}}{6}\right) \\",
+            r"& S_4(x)=\textstyle\frac{1}{3}x + \left(\textstyle\frac{2}{3},0\right)"
+        )
+
+
+        simbolo_e = MathTex(r"E").next_to(l_visiva, UP)
+        s_x = MathTex(r"S_1(x)",
+                     r"S_2(x)",
+                     r"S_3(x)",
+                     r"S_4(x)").scale(0.7)
+
+        
+        self.play(Write(similitudine.shift(7/4 * LEFT + 3/4 * UP)))
+
+        self.play(Create(l_visiva))
 
         iteraz = 3
+        # Una lista di liste, dove ogni sottolista rappresenta un'iterazione del 
+        # frattale che contiene tutti i tratti del frattale in quell'iterazione,
+        # da destra verso sinistra
         lista = [[l,]]
 
         for i in range(iteraz):
@@ -53,32 +76,14 @@ class ScenaCurva(Scene):
                 m.append(k.l_4)
             lista.append(m)
 
-        lung = len(lista)
+        lung = len(lista[1])
          
-        for i in range(len(lista[1]) - 1):
+        self.play(Write(simbolo_e))
+
+        for i in range(lung):
             self.play(Transform(l_visiva.copy(), lista[1][i]))
 
-        self.play(Transform(l_visiva, lista[1][i + 1]))
-
-        frase = MathTex(
-            r"& {{S = (S_1,S_2,S_3,S_4) \ \text{applicato a} \ E = [0,1]}} \\ & S_1(x)=\frac{1}{3}x \\ &S_1(x)=\frac{1}{3}R_{\frac{\pi}{3}}(x) + \left(\frac{1}{3},0\right) \\ &S_1(x)=\frac{1}{3}R_{-\frac{\pi}{3}}(x) + \left(\frac{1}{2},\frac{\sqrt{3}}{6}\right)",
-            font_size = 12
-        )
-
-        self.add(frase.shift(3*UP))
-
-        # offset = 4
-        # for _ in range(iteraz):
-        #     lung = len(lista)
-        #     for j in range(0, lung):
-        #         self.add(lista[offset * j])
-        #         k = Curva(lista[offset * j].get_start(), lista[offset * j].get_end())
-        #         ll = Line(k.inizio,k.terz1).add(k.l_1, k.l_2, k.l_3, k.l_4)
-        #         self.play(Transform(lista[offset * j], ll))        
-        #         lista.insert(offset * j, k.l_4)
-        #         lista.insert(offset * j, k.l_3)
-        #         lista.insert(offset * j, k.l_2)
-        #         lista.insert(offset * j, k.l_1)
-        #         lista.pop(offset * j)
-        #     self.wait(0.5)
-
+        self.play(Write(s_x[0].next_to(lista[1][0], DOWN)))
+        self.play(Write(s_x[1].next_to(lista[1][1], 0.05 * LEFT)))
+        self.play(Write(s_x[2].next_to(lista[1][2], 0.05 * RIGHT)))
+        self.play(Write(s_x[3].next_to(lista[1][3], DOWN)))
