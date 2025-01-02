@@ -49,10 +49,10 @@ class ScenaCurva(Scene):
 
 
         simbolo_e = MathTex(r"E").next_to(l_visiva, UP)
-        s_x = MathTex(r"S_1(x)",
-                     r"S_2(x)",
-                     r"S_3(x)",
-                     r"S_4(x)").scale(0.7)
+        s_x = MathTex(r"S_1(E)",
+                     r"S_2(E)",
+                     r"S_3(E)",
+                     r"S_4(E)").scale(0.7)
 
         
         self.play(Write(similitudine.shift(7/4 * LEFT + 3/4 * UP)))
