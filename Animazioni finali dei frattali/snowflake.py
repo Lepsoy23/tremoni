@@ -62,7 +62,7 @@ class ScenaCurva(Scene):
         iteraz = 3
         # Una lista di liste, dove ogni sottolista rappresenta un'iterazione del 
         # frattale che contiene tutti i tratti del frattale in quell'iterazione,
-        # da destra verso sinistra
+        # da sinstra verso destra
         lista = [[l,]]
 
         for i in range(iteraz):
