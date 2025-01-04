@@ -28,19 +28,20 @@ class Curva(Mobject):
         self.l_3 = Line(self.terz1, self.terz2).rotate( - PI / 3, about_point= self.terz2)
         self.l_4 = Line(self.terz2, self.fine)
 
-class ScenaCurva(Scene):
+class ScenaCurva(ZoomedScene):
     def construct(self):
         num = 3
-        ini = num * LEFT + 2 * UP
-        fin = num * RIGHT + 2 * UP
-        # Questa linea è dove effettivamente partirà il frattale
-        l = Line(ini + 3 * DOWN, fin + 3 * DOWN).scale(3/4).shift(4 * RIGHT)
+        ini = num * LEFT + UP
+        fin = num * RIGHT + UP
 
-        # Serve per fare le varie animazioni
-        l_visiva = Line(ini, fin).scale(3/4).shift(4 * RIGHT + DOWN)
+        # Questa linea è dove effettivamente partirà il frattale
+        l = Line(ini, fin)
+
+        # Serve come linea iniziale per la trasformazione
+        """ l_visiva = Line(ini, fin).scale(3/4).shift(4 * RIGHT + DOWN)
 
         similitudine = MathTex(
-            r"& \textbf{\underline{S}} = (S_1,S_2,S_3,S_4) \ \text{applicato a} \ E = [0,1] \\",
+            r"& \mathbb{S} = (S_1,S_2,S_3,S_4) \ \text{applicato a} \ E = [0,1] \\",
             r"& S_1(x)=\textstyle\frac{1}{3}x \\",
             r"& S_2(x)=\textstyle\frac{1}{3}R_{\frac{\pi}{3}}(x) + \left(\textstyle\frac{1}{3},0\right) \\",
             r"& S_3(x)=\textstyle\frac{1}{3}R_{-\frac{\pi}{3}}(x) + \left(\textstyle\frac{1}{2},\textstyle\frac{\sqrt{3}}{6}\right) \\",
@@ -57,15 +58,15 @@ class ScenaCurva(Scene):
         
         self.play(Write(similitudine.shift(7/4 * LEFT + 3/4 * UP)))
 
-        self.play(Create(l_visiva))
+        self.play(Create(l_visiva)) """
 
-        iteraz = 3
+        livelli = 6
         # Una lista di liste, dove ogni sottolista rappresenta un'iterazione del 
         # frattale che contiene tutti i tratti del frattale in quell'iterazione,
         # da sinstra verso destra
         lista = [[l,]]
 
-        for i in range(iteraz):
+        for i in range(livelli):
             linee = lista[i]
             m = []
             for linea in linee:
@@ -76,7 +77,7 @@ class ScenaCurva(Scene):
                 m.append(k.l_4)
             lista.append(m)
 
-        lung = len(lista[1])
+        """ lung = len(lista[1])
          
         self.play(Write(simbolo_e))
 
@@ -87,3 +88,51 @@ class ScenaCurva(Scene):
         self.play(Write(s_x[1].next_to(lista[1][1], 0.05 * LEFT)))
         self.play(Write(s_x[2].next_to(lista[1][2], 0.05 * RIGHT)))
         self.play(Write(s_x[3].next_to(lista[1][3], DOWN)))
+
+        self.clear()
+        self.wait(0.5) """
+
+        autosimil = Tex("Autosimilarità").scale(2.5)
+        strutt = Tex("Struttura fine").scale(2.5)
+        irreg = Tex("Irregolarità").scale(2.5)
+        dimensione = MathTex(r"\operatorname{dim}(C) \not \in \mathbb{N}").scale(2.5).set_color_by_tex("\not", RED)
+
+        self.play(Write(autosimil))
+        self.play(FadeOut(autosimil))
+
+        curva_finale = Group(*[linea for linea in lista[livelli]])
+        
+        self.play(FadeIn(curva_finale))
+
+        # TODO: capire come zoommare sulla funzione e sulla curva
+        
+        # self.play(self.get_zoom_in_animation())
+        # self.activate_zooming()
+        # self.play(self.zoomed_camera.frame.animate.move_to(ini))
+        # self.play(self.zoomed_camera.frame.animate.move_to((fin - ini) / 2))
+        # self.zoom_activated = False 
+
+        axes = Axes(x_range = (-12, 12), y_range = (-1.5, 1.5), y_length = 2 ,tips = False).shift(2 * DOWN)
+        axes.add_coordinates(font_size = 24)
+        
+        self.play(Write(axes))
+
+        cos = axes.plot(lambda x: np.cos(x), color = RED)
+
+        self.play(Write(cos))
+        self.wait(2)
+
+        self.clear()
+
+        self.play(Write(strutt))
+        self.play(FadeOut(strutt))
+
+        self.play(Write(irreg))
+        self.play(FadeOut(irreg))
+
+        self.play(Write(dimensione))
+        self.play(FadeOut(dimensione))
+
+
+
+
