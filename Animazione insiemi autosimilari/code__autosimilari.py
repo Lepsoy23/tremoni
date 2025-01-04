@@ -17,7 +17,7 @@ from manim import (
     Triangle,
 )
 from manim.animation.animation import DEFAULT_ANIMATION_RUN_TIME
-from manim import UP, DOWN, GREEN, WHITE, BLUE, LEFT
+from manim import UP, DOWN, GREEN, WHITE, BLUE, LEFT, PURPLE, PINK
 from manim.utils.color import ParsableManimColor
 from manim.typing import Point3D
 from manim import rate_functions
@@ -132,7 +132,10 @@ def get_Polygram(
         }
     )
 
-    return Polygram(*vertex_groups, color=color, **kwargs)
+    poly = Polygram(*vertex_groups, color=color, stroke_color=color, **kwargs)
+    poly.set_fill(color=color)
+    return poly
+
 
 
 class FakeFadeIn(FadeIn):
@@ -176,6 +179,7 @@ class SierpinskiActualStep(Animation):
         mobject: Polygram,
         run_time: float | None = None,
         opacity: float = 1,
+        color: ParsableManimColor | None = None,
         **kwargs,
     ):
         assert isinstance(mobject, Polygram)
@@ -192,6 +196,11 @@ class SierpinskiActualStep(Animation):
             run_time=run_time,
             **kwargs,
         )
+
+        if color is None:
+            self._color = mobject.color
+        else:
+            self._color = color
 
         self._color = mobject.color
         self._original = mobject
@@ -287,7 +296,11 @@ class SierpinskiDirect:
 
 
 def sierpinski_step(
-    scene: Scene, poly: Polygram, run_time: float | None = None, *args, **kwargs
+    scene: Scene,
+    poly: Polygram,
+    run_time: float | None = None,
+    color: ParsableManimColor | None = None,
+    *args, **kwargs
 ) -> tuple[Polygram, Polygram]:
     if run_time is None:
         rtFFI = None
@@ -302,7 +315,7 @@ def sierpinski_step(
     copy.set_fill(opacity=1)
 
     animFFI = FakeFadeIn(copy, run_time=rtFFI)
-    animSAS = SierpinskiActualStep(poly, run_time=rtSAS, opacity=1)
+    animSAS = SierpinskiActualStep(poly, run_time=rtSAS, opacity=1, color=color)
 
     scene.play(animFFI)
     scene.play(animSAS)
@@ -424,6 +437,7 @@ class SimilScene(ZoomedScene):
 
         self.play(FadeOut(Group(*self.mobjects)))
 
+        color = [BLUE, PURPLE, PINK]
         poly = Triangle(color=BLUE, joint_type=LineJointType.BEVEL)
         poly.scale(4)
         copy = poly.copy()
