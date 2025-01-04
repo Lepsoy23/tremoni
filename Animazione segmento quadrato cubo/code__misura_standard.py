@@ -29,7 +29,10 @@ def get_Polygram(
         }
     )
 
-    return Polygram(*vertex_groups, color=color, **kwargs)
+    poly = Polygram(*vertex_groups, color=color, stroke_color=color, **kwargs)
+    poly.set_fill(color=color)
+    return poly
+
 
 
 class SierpinskiDirect:
