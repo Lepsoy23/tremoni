@@ -20,7 +20,7 @@ from manim.animation.animation import DEFAULT_ANIMATION_RUN_TIME
 from manim import UP, DOWN, GREEN, WHITE, BLUE, LEFT, PURPLE, PINK
 from manim.utils.color import ParsableManimColor
 from manim.typing import Point3D
-from manim import rate_functions
+from manim import rate_functions, config
 
 NP_DOWN = np.array([0, -1, 0])
 SMOOTH = rate_functions.smoothererstep
@@ -202,7 +202,6 @@ class SierpinskiActualStep(Animation):
         else:
             self._color = color
 
-        self._color = mobject.color
         self._original = mobject
         self._vertex_groups = mobject.get_vertex_groups()
         self._rolled_groups = np.roll(self._vertex_groups.copy(), 1, axis=1)
@@ -249,10 +248,14 @@ class SierpinskiActualStep(Animation):
 
 
 class SierpinskiDirect:
-    def __init__(self, mobject: Polygram):
+    def __init__(self, mobject: Polygram, color: ParsableManimColor | None = None,):
         assert isinstance(mobject, Polygram)
 
-        self._color = mobject.color
+        if color is None:
+            self._color = mobject.color
+        else:
+            self._color = color
+        
         self._original = mobject
         self._vertex_groups = mobject.get_vertex_groups()
         self._rolled_groups = np.roll(self._vertex_groups.copy(), 1, axis=1)
@@ -438,7 +441,8 @@ class SimilScene(ZoomedScene):
         self.play(FadeOut(Group(*self.mobjects)))
 
         color = [BLUE, PURPLE, PINK]
-        poly = Triangle(color=BLUE, joint_type=LineJointType.BEVEL)
+        poly = Triangle(stroke_color=color, joint_type=LineJointType.BEVEL)
+        poly.set_fill(color=color)
         poly.scale(4)
         copy = poly.copy()
 
@@ -449,15 +453,15 @@ class SimilScene(ZoomedScene):
         steps = 6
         self.play(FadeIn(copy, rate_func=RATE_FUNC_FFI, run_time=run_time / 3))
         for _ in range(steps - 1):
-            final, poly = sierpinski_step(self, poly, run_time=run_time)
+            final, poly = sierpinski_step(self, poly, run_time=run_time, color=color)
             shapes.append(final)
 
-        SD = SierpinskiDirect(triangle)
+        SD = SierpinskiDirect(triangle, color=color)
         SD.advance(steps)
 
         SD.bake()
         original = Triangle(
-            color=triangle.color,
+            stroke_color=color,
             joint_type=LineJointType.MITER
         ).scale(4)
         self.play([FadeIn(triangle), FadeIn(original)])
