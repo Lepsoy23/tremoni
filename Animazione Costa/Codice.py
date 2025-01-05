@@ -3,7 +3,7 @@ import random
 
 class TiffAnimation(Scene):
     def construct(self):
-        title = Text("Quante lunga la costa?", font_size=42).set_color_by_gradient(BLUE, PURPLE, PINK)
+        title = Text("Quant'è lunga la costa?", font_size=42).set_color_by_gradient(BLUE, PURPLE, PINK)
         title.to_edge(UP)  # Posiziona il titolo in cima alla scena
         self.play(Write(title))
         # Lista dei fotogrammi in formato TIFF
