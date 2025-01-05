@@ -3,7 +3,7 @@ import random
 
 class EpsilonRicoprimentoGenerale(Scene):
     def construct(self):
-        titolo = Text("Misura di Hausdorff p-dimensionale", font_size=48).to_edge(UP)
+        titolo = Text("Misura di Hausdorff p-dimensionale", font_size=48).to_edge(UP).set_color_by_gradient(BLUE, PURPLE, PINK) 
         self.play(Write(titolo))
         self.wait(1)
         

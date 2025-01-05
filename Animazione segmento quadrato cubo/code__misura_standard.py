@@ -15,7 +15,7 @@ from manim import (
     Create,
     Group,
 )
-from manim import DEGREES, OUT, RIGHT, WHITE
+from manim import DEGREES, OUT, RIGHT, WHITE, BLUE
 from manim.utils.color import ParsableManimColor
 from manim.typing import Point3D
 
@@ -109,10 +109,10 @@ class LineSquareCubeScene(ThreeDScene):
         texs[7].move_to((v, -1, 0))
         texs[8].move_to((v, -2, 0))
 
-        line = Line().move_to((-5, 1, 0))
-        square = Square().move_to((0, 1, 0))
+        line = Line(color=BLUE).move_to((-5, 1, 0))
+        square = Square(color=BLUE).move_to((0, 1, 0))
         cube = (
-            Cube(fill_opacity=0.8)
+            Cube(fill_opacity=0.7)
             .rotate(-70 * DEGREES, axis=OUT)
             .rotate(-80 * DEGREES, axis=RIGHT)
             .move_to((5, 1, 0))
@@ -133,22 +133,22 @@ class LineSquareCubeScene(ThreeDScene):
                 lag_ratio=0.7,
             )
         )
-
+      
         groups = [Group(shapes[i], texs[3 + i], texs[i]) for i in range(3)]
         self.play(
-            [
+            [   
                 groups[i].animate.shift(
                     RIGHT * (((i - 2) * (14 / 5)) - ((i - 1) * (15 / 3)))
                 )
                 for i in range(3)
             ]
         )
-
+        cube.add_updater(lambda m, dt: m.rotate(3 * DEGREES * dt, axis=[0, 1, 0]))
         SD = SierpinskiDirect(triangle)
         SD.advance(5)
         sierpinski = SD.baked()
-
+        
         groups.append(Group(texs[6], texs[7], texs[8], sierpinski))
         self.play([Create(texs[i]) for i in range(6, 9)] + [FadeIn(SD.baked())])
 
-        self.wait(2)
+        self.wait(3)
