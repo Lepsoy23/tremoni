@@ -5,7 +5,7 @@ from manim import *
 class Similitudine(Scene):
     def construct(self):
         # Colori per il gradiente
-        gradient_colors = [BLUE, PURPLE]
+        gradient_colors = [BLUE, PURPLE, PINK]
         
         # Titolo
         title = Text("Insiemi autosimilari", gradient=gradient_colors).scale(0.8).to_edge(UP)
@@ -24,12 +24,24 @@ class Similitudine(Scene):
 
         # Definizione della famiglia di similitudini
         famiglia = MathTex(
-            r"\text{Sia ora }S = \{S_1, \dots, S_m\} \text{ una famiglia finita di similitudini con fattore di riscalamento } r.\\",
-            r"\text{Dato } E \subseteq \mathbb{R}^n \;\text{si definisce } S(E) = \bigcup_{i=1}^m S_i(E) \text{ insieme autosimilare di E.}",
+            r"\text{Sia ora }  \mathbb{S} = \{S_1, \dots, S_m\} \text{ una famiglia finita di similitudini con fattore di riscalamento } r.\\",
+            r"\text{Dato } E \subseteq \mathbb{R}^n \;\text{si dice che E è un insieme auto-similare se soddisfa la seguente proprietà:} \\",
+            r" E = \cup_{i=1}^m S_i(E) =  \mathbb{S}(E) = \mathbb{S}^k(E) \; \text{(invarianza per } \mathbb{S}\text{)} \text{ ed inoltre } m({S^k}_i(E) \cap {S^l}_j(E)) = 0 \\",
+            r"\text{ se } i\not = j \lor k \not = l \\"
         ).scale(0.7).next_to(equations, DOWN, aligned_edge=LEFT, buff=0.5)
-        famiglia.shift(LEFT*4.4)
-        famiglia[0].shift(LEFT*0.1)
+        famiglia[0].shift(LEFT*1.3)
         famiglia[1].shift(LEFT*1.5)
+        famiglia[2].shift(LEFT*1.7)
+        famiglia[3].shift(LEFT*3.1)
+        famiglia.shift(LEFT*3.2)
+        start_index = 29  # Posizione di "a" in "auto-similare"
+        end_index = 42    # Posizione dell'ultimo carattere "e" in "auto-similare"
+        num_chars = end_index - start_index
+        # Colora i caratteri nell'intervallo specificato
+        for i in range(start_index, end_index):
+            progress = (i - start_index) / num_chars
+            color = interpolate_color(gradient_colors[0], gradient_colors[1], progress)
+            famiglia[1][i].set_color(color) 
      # Effetti di apparizione con runtime di 4 secondi
         self.play(Write(title, shift=UP, run_time=2))
         self.wait(0.5)
@@ -39,7 +51,11 @@ class Similitudine(Scene):
         self.wait(1)
         self.play(Write(famiglia, shift=LEFT * 3, run_time=4))
         self.wait(2)
-        self.clear()
+        self.play(Unwrite(title))
+        self.play(Unwrite(definizione),run_time=2)
+        self.play(Unwrite(equations),  run_time=2)
+        self.play(Unwrite(famiglia), run_time=2)
+        self.wait(2)
         # Creazione del primo segmento (E)
         segmento_E = Line(start=LEFT, end=RIGHT, color=BLUE).scale(3).shift(UP * 2.5)  # Ingrandisci e trasla verso l'alto
         label_E = MathTex("E").next_to(segmento_E, UP)
