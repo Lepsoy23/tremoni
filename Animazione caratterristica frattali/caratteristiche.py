@@ -104,12 +104,13 @@ class ScenaCaratt(ZoomedScene):
         
         self.zoomed_camera.frame.move_to(l.get_start())
         self.activate_zooming(animate=False)
-        self.play(self.zoomed_camera.frame.animate.move_to(vertice_superiore).scale(0.5))
+        self.play(self.zoomed_camera.frame.animate.move_to(vertice_superiore))
+        self.play(self.zoomed_camera.frame.animate.scale(0.5))
         self.wait(1)
         self.play(self.zoomed_camera.frame.animate.move_to(l.get_end()))
         self.wait(1)
 
-        self.play(self.zoomed_camera.frame.animate.move_to(2 * DOWN + 0.3 * UP).scale(2))
+        self.play(self.zoomed_camera.frame.animate.move_to(1.7 * DOWN).scale(2))
         self.play(self.zoomed_camera.frame.animate.scale(0.5))
         # self.zoom_activated = False 
         
