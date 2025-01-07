@@ -8,16 +8,16 @@
 
 - [x] proposizione (3) e def (4) di dimensione di Hausdorf
 
-- [] confronto con misura di Lebesgue e concetto usuale di dimensione
+- [ ] confronto con misura di Lebesgue e concetto usuale di dimensione
 (possibile immagine di un segmento, un quadrato e un cubo)
 
 - [x] (possibile immagine di un insieme autosimilare che ingrandendo si ripete)
 
-- [] def (5)-(6) di similitudine e famiglia di similitudini
+- [ ] def (5)-(6) di similitudine e famiglia di similitudini
 
 - [x] esempio costruzione dell'insieme di Cantor (7) con immagine
 e definizione di insieme autosimilare
 
-- [] dimensione dell'insieme di Cantor
+- [ ] dimensione dell'insieme di Cantor
 
-- [] altri esempi: curva di Koch e triangolo di Sierpinski con immagini della costruzione e formula per la dimensione
+- [ ] altri esempi: curva di Koch e triangolo di Sierpinski con immagini della costruzione e formula per la dimensione
