@@ -21,6 +21,7 @@ from manim import UP, DOWN, GREEN, WHITE, BLUE, LEFT, PURPLE, PINK
 from manim.utils.color import ParsableManimColor
 from manim.typing import Point3D
 from manim import rate_functions, config
+from manim import *
 
 NP_DOWN = np.array([0, -1, 0])
 SMOOTH = rate_functions.smoothererstep
@@ -403,23 +404,70 @@ class SimilScene(ZoomedScene):
         texs[5].move_to((4, 2.5, 0))
         texs[6].move_to((4, -1, 0))
 
-        for tex in texs[:3]:
-            self.play(Create(tex))
+        #for tex in texs[:3]:
+        #   self.play(Create(tex))
+                # Colori per il gradiente
+        gradient_colors = [BLUE, PURPLE, PINK]
+        
+        # Titolo
+        title = Text("Insiemi auto-similari", gradient=gradient_colors).scale(0.8).to_edge(UP)
+        definizione = MathTex(
+            r"\text{Si definisce una similitudine con fattore di riscalamento } r \in (0,1) ",
+        ).scale(0.7).to_edge(UP).to_edge(LEFT, buff=0.5).next_to(title, DOWN, buff=0.5)
+        # Equazioni e spiegazioni
+        equations = MathTex(
+            r"S_i : \mathbb{R}^n \to \mathbb{R}^n \\",
+            r"x \mapsto r O_i(x) + b_i\hspace{1 cm} O_i \in \text{SO}(n), b_i \in \mathbb{R}^n \\ ",
+        ).scale(0.7).next_to(definizione, DOWN, buff=0.5)
+        
+        # Spostare la seconda riga a destra
+        equations[0].shift(LEFT*3.5)
+        equations[1].shift(RIGHT*1.6)
 
+        # Definizione della famiglia di similitudini
+        famiglia = MathTex(
+            r"\text{Sia ora }  \mathbb{S} = \{S_1, \dots, S_m\} \text{ una famiglia finita di similitudini con fattore di riscalamento } r.\\",
+            r"\text{Dato } E \subseteq \mathbb{R}^n \;\text{si dice che E è un insieme auto-similare se soddisfa la seguente proprietà:} \\",
+            r" E = \cup_{i=1}^m S_i(E) =  \mathbb{S}(E) = \mathbb{S}^k(E) \; \text{(invarianza per } \mathbb{S}\text{)} \text{ ed inoltre } m({S^k}_i(E) \cap {S^l}_j(E)) = 0 \\",
+            r"\text{ se } i\not = j \lor k \not = l \\"
+        ).scale(0.7).next_to(equations, DOWN, aligned_edge=LEFT, buff=0.5)
+        famiglia[0].shift(LEFT*1.3)
+        famiglia[1].shift(LEFT*1.5)
+        famiglia[2].shift(LEFT*1.7)
+        famiglia[3].shift(LEFT*3)
+        famiglia.shift(LEFT*3.2)
+        start_index = 29  # Posizione di "a" in "auto-similare"
+        end_index = 42    # Posizione dell'ultimo carattere "e" in "auto-similare"
+        num_chars = end_index - start_index
+        # Colora i caratteri nell'intervallo specificato
+        for i in range(start_index, end_index):
+            progress = (i - start_index) / num_chars
+            color = interpolate_color(gradient_colors[0], gradient_colors[1], progress)
+            famiglia[1][i].set_color(color) 
+     # Effetti di apparizione con runtime di 4 secondi
+        self.play(Write(title, shift=UP, run_time=2))
+        self.wait(0.5)
+        self.play(Write(definizione, shift=UP, run_time=4))
         self.wait(1)
-        self.play(
-            [
-                texs[0].animate.move_to((0, 3, 0)),
-                texs[1].animate.move_to((0, 1.9, 0)),
-                texs[2].animate.move_to((0, 1, 0)),
-            ]
-        )
-
-        for tex in texs[3:5]:
-            self.play(Create(tex))
-
+        self.play(Write(equations, shift=LEFT * 1.3, run_time=4))
         self.wait(1)
-        self.play([Uncreate(tex) for tex in texs[:5]])
+        self.play(Write(famiglia, shift=LEFT * 3, run_time=4))
+        self.wait(2)
+        self.clear()
+        self.wait(1)
+       # self.play(
+        #    [
+        #        texs[0].animate.move_to((0, 3, 0)),
+        #        texs[1].animate.move_to((0, 1.9, 0)),
+        #        texs[2].animate.move_to((0, 1, 0)),
+        #    ]
+      #  )
+
+        #for tex in texs[3:5]:
+            #self.play(Create(tex))
+
+        #self.wait(1)
+       # self.play([Uncreate(tex) for tex in texs[:5]])
 
         for tex in texs[5:7]:
             self.play(Create(tex))

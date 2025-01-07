@@ -1,6 +1,6 @@
 from manim import *
 
-class Inizio(Scene):
+class Fine(Scene):
     def construct(self):
         # Carica l'immagine PNG
         image = ImageMobject("Image.png")
