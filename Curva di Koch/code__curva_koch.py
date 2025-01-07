@@ -7,7 +7,7 @@ import numpy as np
 
 """
 ISTRUZIONI ALLA MODIFICA RAPIDA
-
+per verificare il codice:                           riga 368
 per cambiare i colori:                              riga 183
     (
         volendo si possono mettere dei gradienti:
