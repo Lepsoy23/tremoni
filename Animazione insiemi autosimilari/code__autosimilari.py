@@ -428,8 +428,8 @@ class SimilScene(ZoomedScene):
         famiglia = MathTex(
             r"\text{Sia ora }  \mathbb{S} = \{S_1, \dots, S_m\} \text{ una famiglia finita di similitudini con fattore di riscalamento } r.\\",
             r"\text{Dato } E \subseteq \mathbb{R}^n \;\text{si dice che E è un insieme auto-similare se soddisfa la seguente proprietà:} \\",
-            r" E = \cup_{i=1}^m S_i(E) =  \mathbb{S}(E) = \mathbb{S}^k(E) \; \text{(invarianza per } \mathbb{S}\text{)} \text{ ed inoltre } m({S^k}_i(E) \cap {S^l}_j(E)) = 0 \\",
-            r"\text{ se } i\not = j \lor k \not = l \\"
+            r" E = \cup_{i=1}^m S_i(E) =  \mathbb{S}(E) = \mathbb{S}^k(E) \; \text{(invarianza per } \mathbb{S}\text{)} \text{ ed inoltre } m({S^k}_i(E) \cap {S^k}_j(E)) = 0 \\",
+            r"\text{ se } i\not = j \\"
         ).scale(0.7).next_to(equations, DOWN, aligned_edge=LEFT, buff=0.5)
         famiglia[0].shift(LEFT*1.3)
         famiglia[1].shift(LEFT*1.5)
