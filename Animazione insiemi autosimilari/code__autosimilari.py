@@ -445,18 +445,18 @@ class SimilScene(ZoomedScene):
             color = interpolate_color(gradient_colors[0], gradient_colors[1], progress)
             famiglia[1][i].set_color(color) 
      # Effetti di apparizione con runtime di 4 secondi
-        self.play(Write(title, shift=UP, run_time=2))
-        self.wait(0.5)
-        self.play(Write(definizione, shift=UP, run_time=6))
-        self.wait(0.5)
-        self.play(Write(equations, shift=LEFT * 1.3, run_time=4))
-        self.play(Write(famiglia[0], shift=LEFT * 3, run_time=8))
-        self.wait(10)
-        for i in range(1, 4):
-            self.play(Write(famiglia[i], shift=LEFT * 3, run_time=8))
-        self.wait(3)
-        self.clear()
-        self.wait(2)
+        # self.play(Write(title, shift=UP, run_time=2))
+        # self.wait(0.5)
+        # self.play(Write(definizione, shift=UP, run_time=6))
+        # self.wait(0.5)
+        # self.play(Write(equations, shift=LEFT * 1.3, run_time=4))
+        # self.play(Write(famiglia[0], shift=LEFT * 3, run_time=8))
+        # self.wait(10)
+        # for i in range(1, 4):
+        #     self.play(Write(famiglia[i], shift=LEFT * 3, run_time=8))
+        # self.wait(3)
+        # self.clear()
+        # self.wait(2)
        # self.play(
         #    [
         #        texs[0].animate.move_to((0, 3, 0)),
@@ -473,6 +473,8 @@ class SimilScene(ZoomedScene):
 
         for tex in texs[5:7]:
             self.play(Create(tex))
+        
+        self.wait(19)
 
         poly = Polygram([(-5, 3, 0), (0, 3, 0)], color=GREEN)
         shapes = [poly.copy()]
@@ -488,48 +490,64 @@ class SimilScene(ZoomedScene):
             shapes.append(poly)
             poly = poly.copy()
 
+        fattori = MathTex(
+            r"&\text{Numero similitudini N } = 2 \text{,} \\& \text{fattore di riscalamento r} = \frac{1}{3}"
+            #,substrings_to_isolate=["N", "r"]
+        )#.set_color_by_tex("N", RED).set_color_by_tex("r", BLUE)
+        formula_dim= MathTex(r"\operatorname{dim}_{H} = \log_{\frac{1}{r}}(N)=\log_{3}(2)=0,6309...")
+
+        self.wait(11)
+
         self.play(FadeOut(Group(*self.mobjects)))
 
-        color = [BLUE, PURPLE, PINK]
-        poly = Triangle(stroke_color=color, joint_type=LineJointType.BEVEL)
-        poly.set_fill(color=color)
-        poly.scale(4)
-        copy = poly.copy()
+        self.play(Create(fattori))
+        self.wait(5)
+        self.play(Uncreate(fattori))
 
-        triangle = copy.copy()
-        shapes = [copy]
+        self.play(Create(formula_dim))
+        self.wait(5)
 
-        run_time = 2
-        steps = 6
-        self.play(FadeIn(copy, rate_func=RATE_FUNC_FFI, run_time=run_time / 3))
-        for _ in range(steps - 1):
-            final, poly = sierpinski_step(self, poly, run_time=run_time, color=color)
-            shapes.append(final)
 
-        SD = SierpinskiDirect(triangle, color=color)
-        SD.advance(steps)
+        # color = [BLUE, PURPLE, PINK]
+        # poly = Triangle(stroke_color=color, joint_type=LineJointType.BEVEL)
+        # poly.set_fill(color=color)
+        # poly.scale(4)
+        # copy = poly.copy()
 
-        SD.bake()
-        original = Triangle(
-            stroke_color=color,
-            joint_type=LineJointType.MITER
-        ).scale(4)
-        self.play([FadeIn(triangle), FadeIn(original)])
-        self.remove(*shapes)
+        # triangle = copy.copy()
+        # shapes = [copy]
 
-        group = Group(triangle, original)
+        # run_time = 2
+        # steps = 6
+        # self.play(FadeIn(copy, rate_func=RATE_FUNC_FFI, run_time=run_time / 3))
+        # for _ in range(steps - 1):
+        #     final, poly = sierpinski_step(self, poly, run_time=run_time, color=color)
+        #     shapes.append(final)
 
-        self.play(self.get_zoom_in_animation())
-        shift = 3 * LEFT
-        self.play(
-            [self.get_zoomed_display_pop_out_animation(), group.animate.shift(shift)]
-        )
-        self.activate_zooming()
+        # SD = SierpinskiDirect(triangle, color=color)
+        # SD.advance(steps)
 
-        a = SD.all_groups[0][0][1]
-        b = SD.all_groups[1][0][2]
-        c = SD.all_groups[1][0][1]
-        center = (a + b + c) / 3 + (0, 0.5, 0) + shift
-        self.play(self.zoomed_camera.frame.animate.move_to(center))
+        # SD.bake()
+        # original = Triangle(
+        #     stroke_color=color,
+        #     joint_type=LineJointType.MITER
+        # ).scale(4)
+        # self.play([FadeIn(triangle), FadeIn(original)])
+        # self.remove(*shapes)
 
-        self.wait(2)
+        # group = Group(triangle, original)
+
+        # self.play(self.get_zoom_in_animation())
+        # shift = 3 * LEFT
+        # self.play(
+        #     [self.get_zoomed_display_pop_out_animation(), group.animate.shift(shift)]
+        # )
+        # self.activate_zooming()
+
+        # a = SD.all_groups[0][0][1]
+        # b = SD.all_groups[1][0][2]
+        # c = SD.all_groups[1][0][1]
+        # center = (a + b + c) / 3 + (0, 0.5, 0) + shift
+        # self.play(self.zoomed_camera.frame.animate.move_to(center))
+
+        self.wait(20)

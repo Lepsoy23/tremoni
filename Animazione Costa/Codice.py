@@ -23,7 +23,7 @@ class TiffAnimation(Scene):
         # Crescita esponenziale forte per gli ultimi 3 fotogrammi
         for i in range(8, 10):
             # Aumento esponenziale con un fattore di crescita maggiore
-            perimeters.append(base_perimeter + ( 250*(i - 6)))
+            perimeters.append(base_perimeter + ( 50**(i - 4)))
 
         # Inizializza il primo fotogramma
         first_frame = ImageMobject(frame_files[0]).scale(0.6).shift(0.4 * UP)
@@ -36,6 +36,8 @@ class TiffAnimation(Scene):
         self.play(Write(perimeter_text),run_time=2)
         self.wait(0.5)
 
+        runs = [3,1,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7]
+
         # Trasforma i fotogrammi successivi e aggiorna il testo
         for i in range(1, len(frame_files)):
             next_frame = ImageMobject(frame_files[i]).scale(0.6).shift(0.4 * UP)  # Sposta leggermente in alto
@@ -47,9 +49,9 @@ class TiffAnimation(Scene):
             self.play(
                 Transform(first_frame, next_frame), 
                 Transform(perimeter_text, new_perimeter_text),
-                run_time=0.5
+                run_time=runs[i]
             )
             self.wait(1)
 
         # Mantieni l'ultimo fotogramma visibile per un po'
-        self.wait(1)
+        self.wait(25)

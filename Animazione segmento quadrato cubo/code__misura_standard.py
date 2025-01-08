@@ -143,7 +143,6 @@ class LineSquareCubeScene(ThreeDScene):
                 for i in range(3)
             ]
         )
-        cube.add_updater(lambda m, dt: m.rotate(4 * DEGREES * dt, axis=[-0.01, 1, 0]))
         SD = SierpinskiDirect(triangle)
         SD.advance(5)
         sierpinski = SD.baked()
@@ -151,4 +150,4 @@ class LineSquareCubeScene(ThreeDScene):
         groups.append(Group(texs[6], texs[7], texs[8], sierpinski))
         self.play([Create(texs[i]) for i in range(6, 9)] + [FadeIn(SD.baked())])
 
-        self.wait(10)
+        self.wait(15)

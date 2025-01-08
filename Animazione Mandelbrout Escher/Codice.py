@@ -12,11 +12,11 @@ class Inizio(Scene):
 
         # Anima la scritta con effetto di scrittura
         self.play(Write(etymology_text), run_time=4)
-        self.wait(4)
+        self.wait(1)
 
         # Rimuove la scritta
         self.play(FadeOut(etymology_text))
-        self.wait(1)
+        self.wait(0)
 
         # Creazione della linea del tempo con un intervallo di 40 anni e una freccia alla fine
         timeline = NumberLine(
@@ -41,8 +41,8 @@ class Inizio(Scene):
         ])
 
         # Disegna la linea del tempo e le etichette
-        self.play(Create(timeline), Write(label_objects), run_time=2)
-        self.wait(1)
+        self.play(Create(timeline), Write(label_objects))
+        self.wait(0)
 
         # Aggiungi la data di nascita di Escher sulla linea temporale
         birth_year_escher = 1898
@@ -64,9 +64,7 @@ class Inizio(Scene):
         # Ridimensiona e posiziona l'immagine sopra la data di nascita
         face_image_escher.set_height(4)  # Dimensione della figura
         face_image_escher.move_to(birth_marker_escher.get_top() + UP * 2.5 + LEFT )  # Posiziona sopra la data di nascita
-        self.play(FadeIn(face_image_escher), run_time=6)
-
-        self.wait(3)
+        self.play(FadeIn(face_image_escher), run_time=3)
 
         # Aggiungi la data di nascita di Mandelbrot sulla linea temporale
         birth_year_mandelbrot = 1924
@@ -80,7 +78,7 @@ class Inizio(Scene):
 
         # Disegna il marker e la data di nascita di Mandelbrot
         self.play(Create(birth_marker_mandelbrot), Write(birth_label_mandelbrot))
-        self.wait(1)
+        self.wait(0)
 
         # Carica il file SVG di Mandelbrot
         face_svg_mandelbrot = ImageMobject("Mandelbrout.jpg")
@@ -88,7 +86,7 @@ class Inizio(Scene):
         # Ridimensiona e posiziona l'immagine sopra la data di nascita
         face_svg_mandelbrot.set_height(4)  # Dimensione della figura
         face_svg_mandelbrot.move_to(birth_marker_mandelbrot.get_top() + UP * 2.5 + RIGHT )  # Posiziona sopra la data di nascita
-        self.play(FadeIn(face_svg_mandelbrot), run_time=6)
+        self.play(FadeIn(face_svg_mandelbrot), run_time=3)
 
         # Pausa finale per visualizzare tutto
-        self.wait(2)
+        self.wait(20)
