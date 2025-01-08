@@ -49,13 +49,13 @@ class EpsilonRicoprimentoOttimizzato(Scene):
         # Animiamo l'apparizione del testo
         self.play(
             Write(testo_completo),
-            run_time=2
+            run_time=8
         )
         self.wait()
 
         # Spostare il testo verso l'alto
         self.play(testo_completo.animate.shift(UP * 2))
-        self.wait(0.5)  
+        self.wait(3)  
 
         # Parametri per la curva e il ricoprimento
         curve_color = BLUE

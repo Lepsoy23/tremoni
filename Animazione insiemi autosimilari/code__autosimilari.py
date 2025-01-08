@@ -447,14 +447,16 @@ class SimilScene(ZoomedScene):
      # Effetti di apparizione con runtime di 4 secondi
         self.play(Write(title, shift=UP, run_time=2))
         self.wait(0.5)
-        self.play(Write(definizione, shift=UP, run_time=4))
-        self.wait(1)
+        self.play(Write(definizione, shift=UP, run_time=6))
+        self.wait(0.5)
         self.play(Write(equations, shift=LEFT * 1.3, run_time=4))
-        self.wait(1)
-        self.play(Write(famiglia, shift=LEFT * 3, run_time=4))
-        self.wait(2)
+        self.play(Write(famiglia[0], shift=LEFT * 3, run_time=8))
+        self.wait(10)
+        for i in range(1, 4):
+            self.play(Write(famiglia[i], shift=LEFT * 3, run_time=8))
+        self.wait(3)
         self.clear()
-        self.wait(1)
+        self.wait(2)
        # self.play(
         #    [
         #        texs[0].animate.move_to((0, 3, 0)),

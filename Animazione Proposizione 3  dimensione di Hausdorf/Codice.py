@@ -1,3 +1,4 @@
+from pdb import run
 from manim import *
 
 class PropositionWithGraph(Scene):
@@ -13,7 +14,7 @@ class PropositionWithGraph(Scene):
         ).scale(0.7).next_to(title, DOWN, buff=0.5).shift(RIGHT*2.5)
 
         self.play(Write(title))
-        self.play(Write(proposition))
+        self.play(Write(proposition),run_time=8)
         self.wait(1)
 
         # Assi del grafico con frecce migliorate e valori dell'asse y rimossi
@@ -56,12 +57,13 @@ class PropositionWithGraph(Scene):
         self.play(Create(discontinuity), Write(s_star_label), Write(infinity_label),Write(measureHausdorff))
 
         # Finalizza la scena
-        self.wait(2)
+        self.wait(10)
         definition = MathTex( 
             r" \text{Si definisce la dimensione di Hausdorﬀ di E come:}", r"\\",
             r"\dim_H(E) := \inf\{ s : \mathcal{H}^s(E) = 0\} \hspace{2.85 cm}", r"\\",
             r"= \sup\{ s : \mathcal{H}^s(E) = \infty \}  \hspace{2.65 cm}"
         ).scale(0.6).to_edge(LEFT).shift(DOWN*1.5)
 
-        self.play(Write(definition))
+        self.play(Write(definition),run_time=8)
+        self.wait(2)
 

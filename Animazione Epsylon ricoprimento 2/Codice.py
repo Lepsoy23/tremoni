@@ -3,25 +3,26 @@ import random
 
 class EpsilonRicoprimentoGenerale(Scene):
     def construct(self):
+        self.wait(0.8)
         titolo = Text("Misura di Hausdorff p-dimensionale", font_size=48).to_edge(UP).set_color_by_gradient(BLUE, PURPLE, PINK) 
         self.play(Write(titolo))
-        self.wait(1)
+        self.wait(0.5)
         
         limite = MathTex(
-            r"H^p(A) = \lim_{\varepsilon \to 0} H^p_\varepsilon(A)", 
+            r"H_p(A) = \lim_{\varepsilon \to 0} H_{p,\varepsilon(A)}", 
             font_size=44
         )
         
         # Rendere gialla la epsilon
-        limite[0][14].set_color(YELLOW)  # Il carattere \varepsilon si trova all'indice 14
+        limite[0][15].set_color(YELLOW)  # Il carattere \varepsilon si trova all'indice 14
         limite[0][9].set_color(YELLOW)  # Il carattere \varepsilon si trova all'indice 9 
 
         # Mostrare la formula inizialmente
         self.play(Write(limite))
-        self.wait(2)
+        self.wait(0.5)
 
         # Animare lo spostamento della formula verso l'alto
-        self.play(limite.animate.shift(UP * 1.7), run_time=1.5)
+        self.play(limite.animate.shift(UP * 1.7), run_time=1)
         self.wait(1)
         # Parametri generali
         curve_color = BLUE
@@ -119,11 +120,9 @@ class EpsilonRicoprimentoGenerale(Scene):
 
         # Animazioni
         self.play(Create(curva))  # Disegnare la curva
-        self.wait(0.5)
-
+        self.wait(0.2)
         # Mostrare i punti A e B con le parentesi
         self.play(FadeIn(parentesi_A), FadeIn(parentesi_B))
-        self.wait(0.5)
         epsilon_text = MathTex(r"\varepsilon = {:.2f}".format(1), font_size=28, color=YELLOW).move_to(curva.get_left() + LEFT + 1.5* UP)
         self.play(FadeIn(epsilon_text))
         self.wait(0.5)
@@ -144,14 +143,13 @@ class EpsilonRicoprimentoGenerale(Scene):
             # Creare e fare comparire cerchi
             self.play(
                 Create(VGroup(*current_circles)),
-                run_time=0.7  # Rallentato rispetto a prima
+                run_time=0.4  # Rallentato rispetto a prima
             )
 
             # Creare le figure verdi **solo dopo** aver completato la creazione dei cerchi
             self.play(
                 FadeIn(VGroup(*current_figures)),
-                run_time=0.5
+                run_time=0.4
             )
-            self.wait(0.4)  # Pausa tra i vari raggi
 
         self.wait(0.5)  # Pausa finale

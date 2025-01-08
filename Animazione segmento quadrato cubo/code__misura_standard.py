@@ -81,7 +81,7 @@ class SierpinskiDirect:
         new = self.baked()
         self._original.become(new)
 
-
+  
 class LineSquareCubeScene(ThreeDScene):
     def construct(self):
         texts = [
@@ -108,7 +108,7 @@ class LineSquareCubeScene(ThreeDScene):
         texs[6].move_to((v, 3, 0))
         texs[7].move_to((v, -1, 0))
         texs[8].move_to((v, -2, 0))
-
+        
         line = Line(color=BLUE).move_to((-5, 1, 0))
         square = Square(color=BLUE).move_to((0, 1, 0))
         cube = (
@@ -133,7 +133,7 @@ class LineSquareCubeScene(ThreeDScene):
                 lag_ratio=0.7,
             )
         )
-      
+        self.wait(5)
         groups = [Group(shapes[i], texs[3 + i], texs[i]) for i in range(3)]
         self.play(
             [   
@@ -143,7 +143,7 @@ class LineSquareCubeScene(ThreeDScene):
                 for i in range(3)
             ]
         )
-        cube.add_updater(lambda m, dt: m.rotate(3 * DEGREES * dt, axis=[0, 1, 0]))
+        cube.add_updater(lambda m, dt: m.rotate(4 * DEGREES * dt, axis=[-0.01, 1, 0]))
         SD = SierpinskiDirect(triangle)
         SD.advance(5)
         sierpinski = SD.baked()
@@ -151,4 +151,4 @@ class LineSquareCubeScene(ThreeDScene):
         groups.append(Group(texs[6], texs[7], texs[8], sierpinski))
         self.play([Create(texs[i]) for i in range(6, 9)] + [FadeIn(SD.baked())])
 
-        self.wait(3)
+        self.wait(10)
